@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+
+
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <title>Home Page</title>
+</head>
+<body>
+<h2>Company Home Page</h2>
+<hr>
+<p>Welcome <span sec:authentication=""></span></p>
+<hr>
+<!--        display username and role-->
+<p>
+    <!--            User: <span sec:authentication="principal.username"></span>-->
+    <!--            <br><br>-->
+    Role(s): <span sec:authentication=""></span>
+</p>
+
+<!--
+        <hr>
+
+        <div sec:authorize="hasRole('MANAGER')">
+            <p>
+                <a th:href="@{/leaders}">Leadership Meeting</a>
+                (Only for Manager peeps)
+            </p>
+            <hr>
+        </div>
+
+
+        <div sec:authorize="hasRole('ADMIN')">
+            <p>
+                <a th:href="@{/systems}">IT System Meeting</a>
+                (Only for Admin peeps)
+            </p>
+            <hr>
+        </div>
+        -->
+
+<form action="#" th:action="@{/logout}" method="post">
+    <!--            <input type="submit" value="Logout">-->
+    <button type="submit" class="btn btn-info">Logout</button>
+</form>
+
+<hr>
+
+<div class="container">
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempEmployee : ${employees}">
+            <td th:text="${tempEmployee.firstName}"></td>
+            <td th:text="${tempEmployee.lastName}"></td>
+            <td th:text="${tempEmployee.email}"></td>
+            <td>
+                <a th:href="@{/viewDetails(employeeId=${tempEmployee.id})}"
+                   class="btn btn-primary btn-sm m-2">
+                    View
+                </a>
+
+                <a sec:authorize="hasRole('MANAGER')" th:href="@{/showFormForUpdate(employeeId=${tempEmployee.id})}"
+                   class="btn btn-warning btn-sm m-2">
+                    Update
+                </a>
+
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/delete(employeeId=${tempEmployee.id})}"
+                   class="btn btn-danger btn-sm m-2"
+                   onclick="if(!(confirm('Are you sure you want to delete this employee?')))return false">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+
+</body>
+</html>

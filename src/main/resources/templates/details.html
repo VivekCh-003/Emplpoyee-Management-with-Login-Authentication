@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Employee Details</h2>
+<ul>
+    <li>Id : <span th:text="${employee.id}"></span></li>
+    <li>Name : <span th:text="${employee.firstName}"></span></li>
+    <li>Email : <span th:text="${employee.email}"></span></li>
+</ul>
+<a th:href="@{/}">Back to home page</a>
+</body>
+</html>
